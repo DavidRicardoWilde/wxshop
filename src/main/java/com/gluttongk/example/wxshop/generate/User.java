@@ -1,7 +1,10 @@
 package com.gluttongk.example.wxshop.generate;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.util.Date;
 
+@SuppressFBWarnings({"EI_EXPOSE_REP", "EI_EXPOSE_REP2"})
 public class User {
     /**
      *
