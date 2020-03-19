@@ -17,7 +17,7 @@
 <!--            <property name="forceBigDecimals" value="false" />-->
 <!--        </javaTypeResolver>-->
 
-        <javaModelGenerator targetPackage="com.gluttongk.example.wxshop.generate" targetProject="src/main/java">
+        <javaModelGenerator targetPackage="com.gluttongk.example.generate" targetProject="src/main/java">
             <property name="enableSubPackages" value="true" />
             <property name="trimStrings" value="true" />
         </javaModelGenerator>
@@ -26,7 +26,7 @@
             <property name="enableSubPackages" value="true" />
         </sqlMapGenerator>
 
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.gluttongk.example.wxshop.generate" targetProject="src/main/java">
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.gluttongk.example.generate" targetProject="src/main/java">
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
 
@@ -35,8 +35,8 @@
             <generatedKey column="ID" sqlStatement="MySql" identity="true" />
             <columnOverride column="AVATAR_URL" property="avatarUrl" />
 <!--            <ignoreColumn column="FRED" />-->
-            <columnOverride column="CREATED_AT" property="createdAt" />
-            <columnOverride column="UPDATED_AT" property="updatedAt" />
+            <columnOverride column="CREATED_AT" jdbcType="createdAt" />
+            <columnOverride column="UPDATED_AT" jdbcType="updatedAt" />
         </table>
 
     </context>

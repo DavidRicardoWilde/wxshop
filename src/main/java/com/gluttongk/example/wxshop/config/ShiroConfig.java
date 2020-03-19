@@ -1,15 +1,14 @@
-package com.gluttongk.example.wxshop.config;
+package com.gluttongk.example.config;
 
-import com.gluttongk.example.wxshop.Service.ShiroRealm;
-import com.gluttongk.example.wxshop.Service.VerificationCodeCheckService;
 import org.apache.shiro.cache.MemoryConstrainedCacheManager;
-import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.session.mgt.DefaultSessionManager;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.apache.shiro.mgt.SecurityManager;
 
+import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,17 +32,13 @@ public class ShiroConfig {
     }
 
     @Bean
-    public SecurityManager securityManager(ShiroRealm shiroRealm) {
+    public SecurityManager securityManager() {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
 
-        securityManager.setRealm(shiroRealm );
-        securityManager.setCacheManager(new MemoryConstrainedCacheManager()); //设置cookie session
+//        securityManager.setRealm();
+        securityManager.setCacheManager(new MemoryConstrainedCacheManager());//设置cookie session
         securityManager.setSessionManager(new DefaultSessionManager());
         return securityManager;
-    }
 
-    @Bean
-    public ShiroRealm myShiroRealm(VerificationCodeCheckService verificationCodeCheckService) {
-        return new ShiroRealm(verificationCodeCheckService);
     }
 }
