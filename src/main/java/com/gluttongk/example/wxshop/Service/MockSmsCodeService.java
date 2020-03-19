@@ -1,6 +1,6 @@
-package com.gluttongk.example.Service;
+package com.gluttongk.example.wxshop.Service;
 
-import com.gluttongk.example.Service.ServiceInterface.SmsCodeServiceInterface;
+import com.gluttongk.example.wxshop.Service.ServiceInterface.SmsCodeServiceInterface;
 import org.springframework.stereotype.Service;
 
 @Service

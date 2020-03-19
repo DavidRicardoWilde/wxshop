@@ -8,3 +8,5 @@ spring:
     # driver-class-name
     ## snake case
 #    driver-class-name
+mybatis:
+  config-location: classpath:db/mybatis/config.xml
