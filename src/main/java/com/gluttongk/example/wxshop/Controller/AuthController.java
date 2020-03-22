@@ -71,13 +71,13 @@ public class AuthController {
     }
 
     @GetMapping("/status")
-    public void loginStatus() {
-//        if (UserContext.getCurrentUser() == null) {
-//            return LoginResponse.notLogin();
-//        } else {
-//            return LoginResponse.login(UserContext.getCurrentUser());
-//        }
-        System.out.println(SecurityUtils.getSubject().getPrincipal());
+    public Object loginStatus() {
+        if (UserContext.getCurrentUser() == null) {
+            return LoginResponse.notLogin();
+        } else {
+            return LoginResponse.login(UserContext.getCurrentUser());
+        }
+//        System.out.println(SecurityUtils.getSubject().getPrincipal());
     }
 
     public static class TelAndCode {

@@ -33,7 +33,7 @@ public class UserLoginInterceptor implements HandlerInterceptor {
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
 //            System.out.println("Post");
-        //非常重要，因为线程会被费用
+        //非常重要，因为线程会被复用
         //如果 在线程1中保存了用户A的信息， 且没有清理的话
         //下次线程1再用来处理别的请求的时候， 就会出现"串号"的情况
         UserContext.setCurrentUser(null);

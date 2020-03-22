@@ -33,7 +33,7 @@ public class AuthIntegrationTest {
     public void LoginLogoutTest() throws JsonProcessingException {
         // 集成测试
         // step 1: 最开始未登录状态
-        String statusResponse = HttpRequest.post(getUrl("/api/status"))
+        String statusResponse = HttpRequest.get(getUrl("/api/status"))
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .body();
