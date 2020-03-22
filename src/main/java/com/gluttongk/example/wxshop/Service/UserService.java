@@ -6,6 +6,7 @@ import org.apache.ibatis.exceptions.PersistenceException;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -28,4 +29,12 @@ public class UserService {
 
         return user;
     }
+
+    public User getUserByTel(String tel) {
+        return userDAO.getUserByTel(tel);
+    }
+
+//    public Optional<User> getUserByTel(String tel) {
+////        return Optional.ofNullable(userDAO.getUserByTel(tel));
+////    } Java8 函数编程style
 }

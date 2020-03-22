@@ -2,14 +2,13 @@ package com.gluttongk.example.wxshop.Controller;
 
 import com.gluttongk.example.wxshop.Service.AuthService;
 import com.gluttongk.example.wxshop.Service.TelVerificationService;
+import com.gluttongk.example.wxshop.Service.UserContext;
+import com.gluttongk.example.wxshop.generate.User;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -43,6 +42,42 @@ public class AuthController {
         token.setRememberMe(true);
 
         SecurityUtils.getSubject().login(token);
+    }
+
+    public static class LoginResponse {
+        private boolean login;
+        private User user;
+
+        public static LoginResponse notLogin() {
+            return new LoginResponse(false, null);
+        }
+
+        public static LoginResponse login(User user) {
+            return new LoginResponse(true, user);
+        }
+
+        private LoginResponse(boolean login, User user) {
+            this.login = login;
+            this.user = user;
+        }
+
+        public boolean isLogin() {
+            return login;
+        }
+
+        public User getUser() {
+            return user;
+        }
+    }
+
+    @GetMapping("/status")
+    public void loginStatus() {
+//        if (UserContext.getCurrentUser() == null) {
+//            return LoginResponse.notLogin();
+//        } else {
+//            return LoginResponse.login(UserContext.getCurrentUser());
+//        }
+        System.out.println(SecurityUtils.getSubject().getPrincipal());
     }
 
     public static class TelAndCode {
