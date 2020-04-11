@@ -1,9 +1,10 @@
-create table USER
+CREATE TABLE USER
 (
-    ID         bigint primary key auto_increment,
-    NAME       varchar(100),
-    TEL        varchar(20) unique,
-    AVATAR_URL varchar(1024),
-    CREATED_AT timestamp,
-    UPDATED_AT timestamp
+    ID         BIGINT PRIMARY KEY AUTO_INCREMENT,
+    NAME       VARCHAR(100),
+    TEL        VARCHAR(20) UNIQUE,
+    AVATAR_URL VARCHAR(1024),
+    ADDRESS    VARCHAR(1024),
+    CREATED_AT TIMESTAMP NOT NULL DEFAULT NOW(),
+    UPDATED_AT TIMESTAMP NOT NULL DEFAULT NOW()
 )

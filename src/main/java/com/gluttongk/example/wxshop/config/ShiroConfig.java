@@ -1,25 +1,21 @@
 package com.gluttongk.example.wxshop.config;
 
-import com.gluttongk.example.wxshop.Service.*;
-import com.gluttongk.example.wxshop.generate.User;
+import com.gluttongk.example.wxshop.Service.ShiroRealm;
+import com.gluttongk.example.wxshop.Service.UserLoginInterceptor;
+import com.gluttongk.example.wxshop.Service.UserService;
+import com.gluttongk.example.wxshop.Service.VerificationCodeCheckService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.cache.MemoryConstrainedCacheManager;
 import org.apache.shiro.mgt.SecurityManager;
-import org.apache.shiro.session.mgt.DefaultSessionManager;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -61,6 +57,7 @@ public class ShiroConfig implements WebMvcConfigurer {
         securityManager.setRealm(shiroRealm );
         securityManager.setCacheManager(new MemoryConstrainedCacheManager()); //设置cookie session
         securityManager.setSessionManager(new DefaultWebSessionManager());
+        SecurityUtils.setSecurityManager(securityManager);
         return securityManager;
     }
 

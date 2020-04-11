@@ -3,7 +3,7 @@ package com.gluttongk.example.wxshop.Controller;
 import com.gluttongk.example.wxshop.Service.AuthService;
 import com.gluttongk.example.wxshop.Service.TelVerificationService;
 import com.gluttongk.example.wxshop.Service.UserContext;
-import com.gluttongk.example.wxshop.generate.User;
+import com.gluttongk.example.wxshop.entity.LoginResponse;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,30 +44,9 @@ public class AuthController {
         SecurityUtils.getSubject().login(token);
     }
 
-    public static class LoginResponse {
-        private boolean login;
-        private User user;
-
-        public static LoginResponse notLogin() {
-            return new LoginResponse(false, null);
-        }
-
-        public static LoginResponse login(User user) {
-            return new LoginResponse(true, user);
-        }
-
-        private LoginResponse(boolean login, User user) {
-            this.login = login;
-            this.user = user;
-        }
-
-        public boolean isLogin() {
-            return login;
-        }
-
-        public User getUser() {
-            return user;
-        }
+    @PostMapping("/logout")
+    public void logout() {
+        SecurityUtils.getSubject().logout();
     }
 
     @GetMapping("/status")

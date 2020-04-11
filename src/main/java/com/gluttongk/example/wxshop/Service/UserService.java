@@ -6,7 +6,6 @@ import org.apache.ibatis.exceptions.PersistenceException;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.Optional;
 
 @Service
 public class UserService {
