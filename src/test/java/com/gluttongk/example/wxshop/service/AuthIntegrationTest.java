@@ -120,7 +120,6 @@ public class AuthIntegrationTest {
         Assertions.assertEquals(HTTP_BAD_REQUEST, responseCode);
     }
 
-
     private String getUrl(String apiName) {
         // 获取集成测试的端口号
         return "http://localhost:" + environment.getProperty("local.server.port") + apiName;
