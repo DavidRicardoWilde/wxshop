@@ -1,4 +1,4 @@
-package com.gluttongk.example.wxshop.Service;
+package com.gluttongk.example.wxshop.service;
 
 import org.springframework.stereotype.Service;
 

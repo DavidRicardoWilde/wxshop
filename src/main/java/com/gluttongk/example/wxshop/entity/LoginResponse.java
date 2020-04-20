@@ -10,11 +10,11 @@ public class LoginResponse {
         return new LoginResponse(false, null);
     }
 
-    public LoginResponse() {
-    }
-
     public static LoginResponse login(User user) {
         return new LoginResponse(true, user);
+    }
+
+    public LoginResponse() {
     }
 
     private LoginResponse(boolean login, User user) {
@@ -22,11 +22,11 @@ public class LoginResponse {
         this.user = user;
     }
 
-    public boolean isLogin() {
-        return login;
-    }
-
     public User getUser() {
         return user;
+    }
+
+    public boolean isLogin() {
+        return login;
     }
 }

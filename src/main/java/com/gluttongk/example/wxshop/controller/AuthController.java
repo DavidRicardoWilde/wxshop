@@ -1,14 +1,17 @@
-package com.gluttongk.example.wxshop.Controller;
+package com.gluttongk.example.wxshop.controller;
 
-import com.gluttongk.example.wxshop.Service.AuthService;
-import com.gluttongk.example.wxshop.Service.TelVerificationService;
-import com.gluttongk.example.wxshop.Service.UserContext;
+import com.gluttongk.example.wxshop.service.AuthService;
+import com.gluttongk.example.wxshop.service.TelVerificationService;
+import com.gluttongk.example.wxshop.service.UserContext;
 import com.gluttongk.example.wxshop.entity.LoginResponse;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,8 +21,8 @@ public class AuthController {
     private final AuthService authService;
     private final TelVerificationService telVerificationService;
 
-    @Autowired
-    public AuthController(AuthService authService, TelVerificationService telVerificationService) {
+    public AuthController(AuthService authService,
+                          TelVerificationService telVerificationService) {
         this.authService = authService;
         this.telVerificationService = telVerificationService;
     }
@@ -56,7 +59,6 @@ public class AuthController {
         } else {
             return LoginResponse.login(UserContext.getCurrentUser());
         }
-//        System.out.println(SecurityUtils.getSubject().getPrincipal());
     }
 
     public static class TelAndCode {

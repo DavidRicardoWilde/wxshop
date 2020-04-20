@@ -1,9 +1,9 @@
 package com.gluttongk.example.wxshop.config;
 
-import com.gluttongk.example.wxshop.Service.ShiroRealm;
-import com.gluttongk.example.wxshop.Service.UserLoginInterceptor;
-import com.gluttongk.example.wxshop.Service.UserService;
-import com.gluttongk.example.wxshop.Service.VerificationCodeCheckService;
+import com.gluttongk.example.wxshop.service.ShiroRealm;
+import com.gluttongk.example.wxshop.service.UserContext;
+import com.gluttongk.example.wxshop.service.UserService;
+import com.gluttongk.example.wxshop.service.VerificationCodeCheckService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.cache.MemoryConstrainedCacheManager;
 import org.apache.shiro.mgt.SecurityManager;
@@ -13,15 +13,18 @@ import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import javax.servlet.Filter;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
-/***
- *  拦截哪些url 不拦截哪些url
- */
 @Configuration
 public class ShiroConfig implements WebMvcConfigurer {
     @Autowired
@@ -29,24 +32,40 @@ public class ShiroConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new UserLoginInterceptor(userService));
-    }
+        registry.addInterceptor(new HandlerInterceptor() {
+            @Override
+            public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+                Object tel = SecurityUtils.getSubject().getPrincipal();
+                if (tel != null) {
+                    userService.getUserByTel(tel.toString()).ifPresent(UserContext::setCurrentUser);
+                }
+                return true;
+            }
 
-    public UserLoginInterceptor userLoginInterceptor(UserService userService) {
-        return new UserLoginInterceptor(userService);
+            @Override
+            public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+                UserContext.clearCurrentUser();
+            }
+        });
     }
 
     @Bean
-    public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager) {
+    public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager, ShiroLoginFilter shiroLoginFilter) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
 
         Map<String, String> pattern = new HashMap<>();
         pattern.put("/api/code", "anon");
         pattern.put("/api/login", "anon");
+        pattern.put("/api/status", "anon");
+        pattern.put("/api/logout", "anon");
+        pattern.put("/**", "authc");
+
+        Map<String, Filter> filtersMap = new LinkedHashMap<>();
+        filtersMap.put("shiroLoginFilter", shiroLoginFilter);
+        shiroFilterFactoryBean.setFilters(filtersMap);
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(pattern);
-
         return shiroFilterFactoryBean;
     }
 
@@ -54,8 +73,8 @@ public class ShiroConfig implements WebMvcConfigurer {
     public SecurityManager securityManager(ShiroRealm shiroRealm) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
 
-        securityManager.setRealm(shiroRealm );
-        securityManager.setCacheManager(new MemoryConstrainedCacheManager()); //设置cookie session
+        securityManager.setRealm(shiroRealm);
+        securityManager.setCacheManager(new MemoryConstrainedCacheManager());
         securityManager.setSessionManager(new DefaultWebSessionManager());
         SecurityUtils.setSecurityManager(securityManager);
         return securityManager;

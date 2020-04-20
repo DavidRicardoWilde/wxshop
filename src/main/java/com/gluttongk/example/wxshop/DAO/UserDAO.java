@@ -1,21 +1,25 @@
-package com.gluttongk.example.wxshop.DAO;
+package com.gluttongk.example.wxshop.dao;
+
 
 import com.gluttongk.example.wxshop.generate.User;
 import com.gluttongk.example.wxshop.generate.UserExample;
 import com.gluttongk.example.wxshop.generate.UserMapper;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+@SuppressFBWarnings("RCN_REDUNDANT_NULLCHECK_WOULD_HAVE_BEEN_A_NPE")
 @Service
-public class UserDAO {
+public class UserDao {
     private final SqlSessionFactory sqlSessionFactory;
 
-    public UserDAO(SqlSessionFactory sqlSessionFactory) {
+    @Autowired
+    public UserDao(SqlSessionFactory sqlSessionFactory) {
         this.sqlSessionFactory = sqlSessionFactory;
     }
 
-    //    @SuppressFBWarnings("EI_EXPOSE_REP")
     public void insertUser(User user) {
         try (SqlSession sqlSession = sqlSessionFactory.openSession(true)) {
             UserMapper mapper = sqlSession.getMapper(UserMapper.class);

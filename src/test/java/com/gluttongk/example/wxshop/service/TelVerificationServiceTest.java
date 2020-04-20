@@ -1,10 +1,8 @@
-package com.gluttongk.example.wxshop.Service;
+package com.gluttongk.example.wxshop.service;
 
-import com.gluttongk.example.wxshop.Controller.AuthController;
+import com.gluttongk.example.wxshop.controller.AuthController;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class TelVerificationServiceTest {
     public static AuthController.TelAndCode VALID_PARAMETER =

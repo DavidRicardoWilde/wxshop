@@ -1,6 +1,6 @@
-package com.gluttongk.example.wxshop.Service;
+package com.gluttongk.example.wxshop.service;
 
-import com.gluttongk.example.wxshop.Controller.AuthController;
+import com.gluttongk.example.wxshop.controller.AuthController;
 import org.springframework.stereotype.Service;
 
 import java.util.regex.Pattern;
@@ -10,10 +10,11 @@ public class TelVerificationService {
     private static Pattern TEL_PATTERN = Pattern.compile("1\\d{10}");
 
     /**
-     * 验证输入的参数是否合法
+     * 验证输入的参数是否合法：
+     * tel必须存在且为合法的中国大陆手机号
      *
-     * @param param 必要参数
-     * @return bool
+     * @param param 输入的参数
+     * @return true 合法，否则返回false
      */
     public boolean verifyTelParameter(AuthController.TelAndCode param) {
         if (param == null) {
@@ -21,7 +22,6 @@ public class TelVerificationService {
         } else if (param.getTel() == null) {
             return false;
         } else {
-//            return param.getTel().matches("1\\d{10}");
             return TEL_PATTERN.matcher(param.getTel()).find();
         }
     }
