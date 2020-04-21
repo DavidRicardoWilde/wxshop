@@ -5,8 +5,6 @@ import com.gluttongk.example.wxshop.generate.User;
 import com.gluttongk.example.wxshop.generate.UserExample;
 import com.gluttongk.example.wxshop.generate.UserMapper;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,1 +1,1 @@
-package com.gluttongk.example.wxshop.entity;public enum DataStatus {    OK(),    DELETED();    public String getName() {        return name().toLowerCase();    }}
+package com.gluttongk.example.wxshop.entity;public enum DataStatus {    OK(),    DELETED();    public String getName() {        return name().toLowerCase();    }}
